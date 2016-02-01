@@ -220,7 +220,7 @@ function configure_daemon {
 		read -p "Name of this slave on ${MASTER_NAME} [$SLAVE_NODE]: " RESPONSE
 		SLAVE_NODE="${RESPONSE:-$SLAVE_NODE}"
 		# Lowcase:
-		SLAVE_NODE="${SLAVE_NODE,,}"
+		SLAVE_NODE=$(tr '[:upper:]' '[:lower:]' <<<"$SLAVE_NODE")
 	fi
 
 	if [ -z "${MASTER_USER}" ]; then
@@ -301,7 +301,7 @@ not be protected by a password.
 "
 		read -p "Create SSH keys? (yes/no) [yes]" CONFIRM
 		CONFIRM=${CONFIRM:-yes}
-		if [[ "${CONFIRM,,}" =~ ^[y] ]] ; then
+		if [[ "${CONFIRM}" =~ ^[Yy] ]] ; then
 			sudo -i -u "${SERVICE_USER}" \
 				ssh-keygen \
 				    -t rsa -N \'\' \
